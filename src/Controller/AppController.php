@@ -4,7 +4,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -26,9 +25,8 @@ class AppController extends AbstractController
      * @Route("/page/1", name="page_one")
      * @Security("is_granted('ROLE_PAGE_1')")
      */
-    public function pageOne(Request $request): Response
+    public function pageOne(): Response
     {
-        $id = $request->get('id');
         return $this->render('app/page_one.html.twig', [
             'user' => $this->getUser(),
         ]);
@@ -38,11 +36,10 @@ class AppController extends AbstractController
      * @Route("/page/2", name="page_two")
      * @Security("is_granted('ROLE_PAGE_2')")
      */
-    public function pageTwo(Request $request): Response
+    public function pageTwo(): Response
     {
         return $this->render('app/page_two.html.twig', [
             'user' => $this->getUser(),
         ]);
     }
-
 }

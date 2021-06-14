@@ -25,25 +25,25 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     public function getId(): ?int
     {
@@ -57,7 +57,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return $this->username;
     }
 
     public function setUsername(string $username): self
