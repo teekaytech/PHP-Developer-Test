@@ -17,15 +17,12 @@ class AuthTest extends WebTestCase
         $this->userRepo = static::$container->get(UserRepository::class);
     }
 
-    public function testAdminCanVisitDashboard(): void
+    public function testAdminCanNotVisitDashboardWithoutLogin(): void
     {
         $testUser = $this->userRepo->findOneByUsername('admin');
 
-        // simulate logging in the user
-        $this->client->
-
         $this->client->request('GET', '/admin/dashboard');
 
-        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(302);
     }
 }
