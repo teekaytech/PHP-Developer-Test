@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    session_max_idle_time: 300 // set to whatever value you want in seconds
 
 services:
     # default configuration for services in *this* file
@@ -26,6 +27,11 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
+    App.Handler.SessionIdle:
+        class: App\Security\SessionIdleHandler
+        arguments: ['%session_max_idle_time%']
+        tags: [{ name: kernel.event_listener, event: kernel.request }]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
