@@ -104,8 +104,10 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         if ($token->getUser()->isUser()) {
-            $id = $token->getUser()->getRoles()[0] === 'ROLE_PAGE_1' ? 1 : 2;
-            return new RedirectResponse($this->urlGenerator->generate('show', ['id' => $id]));
+            if ($token->getUser()->getRoles()[0] === 'ROLE_PAGE_1') {
+                return new RedirectResponse($this->urlGenerator->generate('page_one'));
+            }
+            return new RedirectResponse($this->urlGenerator->generate('page_two'));
         }
 
         return new RedirectResponse($this->urlGenerator->generate('dashboard'));

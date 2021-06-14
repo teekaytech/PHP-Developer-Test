@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AppController extends AbstractController
 {
@@ -21,13 +23,24 @@ class AppController extends AbstractController
     }
 
     /**
-     * @Route("/page/{id}", name="show")
+     * @Route("/page/1", name="page_one")
+     * @Security("is_granted('ROLE_PAGE_1')")
      */
-    public function show(Request $request): Response
+    public function pageOne(Request $request): Response
     {
         $id = $request->get('id');
-        return $this->render('app/show.html.twig', [
-            'id' => $id,
+        return $this->render('app/page_one.html.twig', [
+            'user' => $this->getUser(),
+        ]);
+    }
+
+    /**
+     * @Route("/page/2", name="page_two")
+     * @Security("is_granted('ROLE_PAGE_2')")
+     */
+    public function pageTwo(Request $request): Response
+    {
+        return $this->render('app/page_two.html.twig', [
             'user' => $this->getUser(),
         ]);
     }
