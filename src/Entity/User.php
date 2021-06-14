@@ -15,6 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_PAGE_1 = 'ROLE_PAGE_1';
+    const ROLE_PAGE_2 = 'ROLE_PAGE_2';
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -71,8 +73,6 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -134,5 +134,14 @@ class User implements UserInterface
     public function isAdmin(): bool
     {
         return in_array(self::ROLE_ADMIN, $this->getRoles());
+    }
+
+    public function isUser(): bool
+    {
+        if (in_array(self::ROLE_PAGE_1, $this->getRoles()) ||
+            in_array(self::ROLE_PAGE_2, $this->getRoles())) {
+            return true;
+        }
+        return false;
     }
 }
